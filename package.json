@@ -1,17 +1,18 @@
 {
-  "name": "vfile-frontmatter",
+  "name": "vfile-matter",
   "version": "0.0.0",
-  "description": "Parse the YAML frontmatter in a vfile",
+  "description": "Parse the YAML front matter in a vfile",
   "license": "MIT",
   "keywords": [
     "virtual",
     "file",
     "vfile",
     "frontmatter",
+    "matter",
     "yaml"
   ],
-  "repository": "vfile/vfile-frontmatter",
-  "bugs": "https://github.com/vfile/vfile-frontmatter/issues",
+  "repository": "vfile/vfile-matter",
+  "bugs": "https://github.com/vfile/vfile-matter/issues",
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/unified"

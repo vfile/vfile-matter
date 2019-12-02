@@ -1,4 +1,4 @@
-# vfile-frontmatter
+# vfile-matter
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
@@ -8,14 +8,14 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Parse the YAML frontmatter in a [`vfile`][vfile].
+Parse the YAML front matter in a [`vfile`][vfile].
 
 ## Install
 
 [npm][]:
 
 ```sh
-npm install vfile-frontmatter
+npm install vfile-matter
 ```
 
 ## Use
@@ -33,11 +33,11 @@ And our script, `example.js`, looks like so:
 
 ```js
 var vfile = require('to-vfile')
-var frontmatter = require('vfile-frontmatter')
+var matter = require('vfile-matter')
 
 var file = vfile.readSync('example.html')
 
-frontmatter(file, {strip: true})
+matter(file, {strip: true})
 
 console.log(file.data)
 console.log(String(file))
@@ -46,7 +46,7 @@ console.log(String(file))
 Now, running our script (`node example`) yields:
 
 ```js
-{ frontmatter: { title: 'Hello, world!' } }
+{ matter: { title: 'Hello, world!' } }
 ```
 
 ```html
@@ -55,20 +55,20 @@ Now, running our script (`node example`) yields:
 
 ## API
 
-### `frontmatter(file[, options])`
+### `matter(file[, options])`
 
-Parse the YAML frontmatter in a [`vfile`][vfile], and add it as
-`file.data.frontmatter`.
+Parse the YAML front matter in a [`vfile`][vfile], and add it as
+`file.data.matter`.
 
-If no frontmatter is found in the file, nothing happens, except that
-`file.data.frontmatter` is set to an empty object (`{}`).
+If no matter is found in the file, nothing happens, except that
+`file.data.matter` is set to an empty object (`{}`).
 
 ###### Parameters
 
 *   `file` ([`VFile`][vfile])
     — Virtual file
 *   `options.strip` (`boolean`, default: `false`)
-    — Remove the YAML frontmatter from the file
+    — Remove the YAML front matter from the file
 
 ###### Returns
 
@@ -90,21 +90,21 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/vfile/vfile-frontmatter.svg
+[build-badge]: https://img.shields.io/travis/vfile/vfile-matter.svg
 
-[build]: https://travis-ci.org/vfile/vfile-frontmatter
+[build]: https://travis-ci.org/vfile/vfile-matter
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/vfile/vfile-frontmatter.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/vfile/vfile-matter.svg
 
-[coverage]: https://codecov.io/github/vfile/vfile-frontmatter
+[coverage]: https://codecov.io/github/vfile/vfile-matter
 
-[downloads-badge]: https://img.shields.io/npm/dm/vfile-frontmatter.svg
+[downloads-badge]: https://img.shields.io/npm/dm/vfile-matter.svg
 
-[downloads]: https://www.npmjs.com/package/vfile-frontmatter
+[downloads]: https://www.npmjs.com/package/vfile-matter
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/vfile-frontmatter.svg
+[size-badge]: https://img.shields.io/bundlephobia/minzip/vfile-matter.svg
 
-[size]: https://bundlephobia.com/result?p=vfile-frontmatter
+[size]: https://bundlephobia.com/result?p=vfile-matter
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 

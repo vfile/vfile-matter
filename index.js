@@ -5,21 +5,21 @@ var yamlParse = require('js-yaml').safeLoad
 var parse = require('remark-frontmatter/lib/parse')
 var matters = require('remark-frontmatter/lib/matters')
 
-module.exports = frontmatter
+module.exports = matter
 
 var matterParse = parse(matters('yaml')[0])[1]
 
-function frontmatter(file, options) {
+function matter(file, options) {
   var strip = (options || {}).strip
   var data = file.data
   var doc = String(file)
   var result = matterParse(mockEat, doc)
   var offset
 
-  data.frontmatter = {}
+  data.matter = {}
 
   if (result) {
-    data.frontmatter = yamlParse(result.value, {filename: file.path})
+    data.matter = yamlParse(result.value, {filename: file.path})
 
     if (strip) {
       offset = result.length

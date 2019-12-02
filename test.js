@@ -3,39 +3,39 @@
 var test = require('tape')
 var buffer = require('is-buffer')
 var vfile = require('to-vfile')
-var frontmatter = require('.')
+var matter = require('.')
 
-var matter = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
+var yaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 var doc = 'Here is a document\nMore of the document\nOther lines\n'
-var both = matter + '\n' + doc
+var both = yaml + '\n' + doc
 
-test('vfile-frontmatter', function(t) {
+test('vfile-matter', function(t) {
   var file = vfile({contents: both})
 
-  t.equal(frontmatter(file), file, 'should return the given file')
+  t.equal(matter(file), file, 'should return the given file')
 
   t.deepEqual(
     file.data,
-    {frontmatter: {key: 'value', list: [1, 2]}},
+    {matter: {key: 'value', list: [1, 2]}},
     'should add data'
   )
 
-  file = frontmatter(vfile({contents: doc}))
-  t.deepEqual(file.data, {frontmatter: {}}, 'should support no frontmatter')
+  file = matter(vfile({contents: doc}))
+  t.deepEqual(file.data, {matter: {}}, 'should support no matter')
 
-  file = frontmatter(vfile({contents: both}), {strip: true})
-  t.deepEqual(String(file), doc, 'should strip frontmatter')
+  file = matter(vfile({contents: both}), {strip: true})
+  t.deepEqual(String(file), doc, 'should strip matter')
 
-  file = frontmatter(vfile({contents: matter}), {strip: true})
-  t.deepEqual(String(file), '', 'should strip frontmatter completely')
+  file = matter(vfile({contents: yaml}), {strip: true})
+  t.deepEqual(String(file), '', 'should strip matter completely')
 
-  file = frontmatter(vfile({contents: doc}), {strip: true})
-  t.deepEqual(String(file), doc, 'should support no frontmatter w/ strip')
+  file = matter(vfile({contents: doc}), {strip: true})
+  t.deepEqual(String(file), doc, 'should support no matter w/ strip')
 
-  file = frontmatter(vfile({contents: Buffer.from(both)}), {strip: true})
+  file = matter(vfile({contents: Buffer.from(both)}), {strip: true})
   t.ok(buffer(file.contents), 'should supporting buffers')
 
-  file = frontmatter(vfile(), {strip: true})
+  file = matter(vfile(), {strip: true})
   t.ok(file.contents === undefined, 'should supporting empties')
 
   t.end()
