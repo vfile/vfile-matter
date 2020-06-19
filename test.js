@@ -9,7 +9,7 @@ var yaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 var doc = 'Here is a document\nMore of the document\nOther lines\n'
 var both = yaml + '\n' + doc
 
-test('vfile-matter', function(t) {
+test('vfile-matter', function (t) {
   var file = vfile({contents: both})
 
   t.equal(matter(file), file, 'should return the given file')
