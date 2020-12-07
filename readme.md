@@ -90,9 +90,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/vfile/vfile-matter.svg
+[build-badge]: https://github.com/vfile/vfile-matter/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/vfile/vfile-matter
+[build]: https://github.com/vfile/vfile-matter/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/vfile/vfile-matter.svg
 
