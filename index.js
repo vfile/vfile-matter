@@ -2,44 +2,26 @@
 
 var buffer = require('is-buffer')
 var yamlParse = require('js-yaml').safeLoad
-var parse = require('remark-frontmatter/lib/parse')
-var matters = require('remark-frontmatter/lib/matters')
 
 module.exports = matter
 
-var matterParse = parse(matters('yaml')[0])[1]
-
 function matter(file, options) {
   var strip = (options || {}).strip
-  var data = file.data
   var doc = String(file)
-  var result = matterParse(mockEat, doc)
-  var offset
+  var match = /^---(?:\r?\n|\r)(?:([\s\S]*)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/.exec(
+    doc
+  )
 
-  data.matter = {}
-
-  if (result) {
-    data.matter = yamlParse(result.value, {filename: file.path})
+  if (match) {
+    file.data.matter = yamlParse(match[1], {filename: file.path})
 
     if (strip) {
-      offset = result.length
-
-      // \n
-      if (doc.charCodeAt(offset) === 10) {
-        offset++
-      }
-
-      doc = doc.slice(offset)
+      doc = doc.slice(match[0].length)
       file.contents = buffer(file.contents) ? Buffer.from(doc) : doc
     }
+  } else {
+    file.data.matter = {}
   }
 
   return file
-}
-
-function mockEat(doc) {
-  return add
-  function add(node) {
-    return {length: doc.length, value: node.value}
-  }
 }
