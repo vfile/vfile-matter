@@ -35,14 +35,14 @@
     "js-yaml": "^3.0.0"
   },
   "devDependencies": {
-    "dtslint": "^4.0.7",
+    "dtslint": "^4.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^9.0.0",
     "remark-preset-wooorm": "^8.0.0",
     "tape": "^5.0.0",
     "to-vfile": "^6.0.0",
-    "vfile": "^4.2.1",
+    "vfile": "^4.0.0",
     "xo": "^0.35.0"
   },
   "scripts": {
