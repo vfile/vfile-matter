@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "is-buffer": "^2.0.0",
-    "js-yaml": "^3.0.0"
+    "js-yaml": "^4.0.0"
   },
   "devDependencies": {
     "dtslint": "^4.0.0",

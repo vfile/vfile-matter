@@ -1,7 +1,7 @@
 'use strict'
 
 var buffer = require('is-buffer')
-var yamlParse = require('js-yaml').safeLoad
+var yamlParse = require('js-yaml').load
 
 module.exports = matter
 
