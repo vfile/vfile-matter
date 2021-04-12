@@ -69,6 +69,8 @@ If no matter is found in the file, nothing happens, except that
     — Virtual file
 *   `options.strip` (`boolean`, default: `false`)
     — Remove the YAML front matter from the file
+*   `options.yaml` (`Object`, default: `{}`)
+    — Options passed to `jsYaml.load()`
 
 ###### Returns
 
