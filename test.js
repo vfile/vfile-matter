@@ -4,6 +4,7 @@ var test = require('tape')
 var buffer = require('is-buffer')
 var vfile = require('to-vfile')
 var matter = require('.')
+var CORE_SCHEMA = require('js-yaml').CORE_SCHEMA
 
 var yaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 var doc = 'Here is a document\nMore of the document\nOther lines\n'
@@ -37,6 +38,15 @@ test('vfile-matter', function (t) {
 
   file = matter(vfile(), {strip: true})
   t.ok(file.contents === undefined, 'should supporting empties')
+
+  file = matter(vfile({contents: '---\ndate: 2021-01-01\n---\n'}), {
+    yaml: {schema: CORE_SCHEMA}
+  })
+  t.deepEqual(
+    file.data,
+    {matter: {date: '2021-01-01'}},
+    'should pass yaml options'
+  )
 
   t.end()
 })

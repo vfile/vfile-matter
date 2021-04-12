@@ -35,6 +35,7 @@
     "js-yaml": "^4.0.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.0",
     "dtslint": "^4.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
@@ -72,7 +73,10 @@
     "rules": {
       "guard-for-in": "off",
       "unicorn/prefer-includes": "off"
-    }
+    },
+    "ignores": [
+      "types/"
+    ]
   },
   "remarkConfig": {
     "plugins": [

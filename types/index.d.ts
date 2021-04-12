@@ -1,6 +1,7 @@
 // TypeScript Version: 3.7
 
 import {VFile, VFileCompatible} from 'vfile'
+import {LoadOptions} from 'js-yaml'
 
 export = matter
 
@@ -23,5 +24,9 @@ declare namespace matter {
      * Remove the YAML front matter from the file
      */
     strip?: boolean
+    /**
+     * Options for the YAML parser.
+     */
+    yaml?: Omit<LoadOptions, 'filename'>
   }
 }
