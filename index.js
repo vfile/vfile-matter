@@ -6,9 +6,9 @@ var yamlParse = require('js-yaml').load
 module.exports = matter
 
 function matter(file, options) {
-  options = options || {}
-  var strip = options.strip
-  var yamlOptions = options.yaml || {}
+  var settings = options || {}
+  var strip = settings.strip
+  var yamlOptions = settings.yaml || {}
   var doc = String(file)
   var match = /^---(?:\r?\n|\r)(?:([\s\S]*)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/.exec(
     doc
@@ -17,7 +17,7 @@ function matter(file, options) {
   if (match) {
     file.data.matter = yamlParse(
       match[1],
-      Object.assign(yamlOptions, {filename: file.path})
+      Object.assign({}, yamlOptions, {filename: file.path})
     )
 
     if (strip) {

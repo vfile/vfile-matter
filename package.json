@@ -74,7 +74,9 @@
       "guard-for-in": "off",
       "unicorn/prefer-includes": "off"
     },
-    "ignores": ["types"]
+    "ignores": [
+      "types/"
+    ]
   },
   "remarkConfig": {
     "plugins": [
