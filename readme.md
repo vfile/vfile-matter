@@ -12,6 +12,9 @@ Parse the YAML front matter in a [`vfile`][vfile].
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -32,8 +35,8 @@ title: Hello, world!
 And our script, `example.js`, looks like so:
 
 ```js
-var vfile = require('to-vfile')
-var matter = require('vfile-matter')
+import {toVFile as vfile} from 'to-vfile'
+import {matter} from 'vfile-matter'
 
 var file = vfile.readSync('example.html')
 
@@ -54,6 +57,9 @@ Now, running our script (`node example`) yields:
 ```
 
 ## API
+
+This package exports the following identifiers: `matter`.
+There is no default export.
 
 ### `matter(file[, options])`
 

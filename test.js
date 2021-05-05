@@ -1,17 +1,15 @@
-'use strict'
+import test from 'tape'
+import buffer from 'is-buffer'
+import {CORE_SCHEMA} from 'js-yaml'
+import {toVFile as vfile} from 'to-vfile'
+import {matter} from './index.js'
 
-var test = require('tape')
-var buffer = require('is-buffer')
-var vfile = require('to-vfile')
-var matter = require('.')
-var CORE_SCHEMA = require('js-yaml').CORE_SCHEMA
-
-var yaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
+var someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 var doc = 'Here is a document\nMore of the document\nOther lines\n'
-var both = yaml + '\n' + doc
+var both = someYaml + '\n' + doc
 
 test('vfile-matter', function (t) {
-  var file = vfile({contents: both})
+  var file = vfile({value: both})
 
   t.equal(matter(file), file, 'should return the given file')
 
@@ -21,25 +19,25 @@ test('vfile-matter', function (t) {
     'should add data'
   )
 
-  file = matter(vfile({contents: doc}))
+  file = matter(vfile({value: doc}))
   t.deepEqual(file.data, {matter: {}}, 'should support no matter')
 
-  file = matter(vfile({contents: both}), {strip: true})
+  file = matter(vfile({value: both}), {strip: true})
   t.deepEqual(String(file), doc, 'should strip matter')
 
-  file = matter(vfile({contents: yaml}), {strip: true})
+  file = matter(vfile({value: someYaml}), {strip: true})
   t.deepEqual(String(file), '', 'should strip matter completely')
 
-  file = matter(vfile({contents: doc}), {strip: true})
+  file = matter(vfile({value: doc}), {strip: true})
   t.deepEqual(String(file), doc, 'should support no matter w/ strip')
 
-  file = matter(vfile({contents: Buffer.from(both)}), {strip: true})
-  t.ok(buffer(file.contents), 'should supporting buffers')
+  file = matter(vfile({value: Buffer.from(both)}), {strip: true})
+  t.ok(buffer(file.value), 'should supporting buffers')
 
   file = matter(vfile(), {strip: true})
-  t.ok(file.contents === undefined, 'should supporting empties')
+  t.ok(file.value === undefined, 'should supporting empties')
 
-  file = matter(vfile({contents: '---\ndate: 2021-01-01\n---\n'}), {
+  file = matter(vfile({value: '---\ndate: 2021-01-01\n---\n'}), {
     yaml: {schema: CORE_SCHEMA}
   })
   t.deepEqual(

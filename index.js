@@ -1,11 +1,7 @@
-'use strict'
+import buffer from 'is-buffer'
+import {load} from 'js-yaml'
 
-var buffer = require('is-buffer')
-var yamlParse = require('js-yaml').load
-
-module.exports = matter
-
-function matter(file, options) {
+export function matter(file, options) {
   var settings = options || {}
   var strip = settings.strip
   var yamlOptions = settings.yaml || {}
@@ -15,14 +11,14 @@ function matter(file, options) {
   )
 
   if (match) {
-    file.data.matter = yamlParse(
+    file.data.matter = load(
       match[1],
       Object.assign({}, yamlOptions, {filename: file.path})
     )
 
     if (strip) {
       doc = doc.slice(match[0].length)
-      file.contents = buffer(file.contents) ? Buffer.from(doc) : doc
+      file.value = buffer(file.value) ? Buffer.from(doc) : doc
     }
   } else {
     file.data.matter = {}
