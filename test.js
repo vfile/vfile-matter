@@ -34,6 +34,10 @@ test('vfile-matter', function (t) {
   file = matter(vfile({value: Buffer.from(both)}), {strip: true})
   t.ok(buffer(file.value), 'should supporting buffers')
 
+  var extra = 'Here is a thematic break\n---\nEnd'
+  file = matter(vfile({value: both + extra}), {strip: true})
+  t.deepEqual(String(file), doc + extra, 'should handle thematic breaks')
+
   file = matter(vfile(), {strip: true})
   t.ok(file.value === undefined, 'should supporting empties')
 
