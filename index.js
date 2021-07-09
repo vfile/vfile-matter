@@ -22,7 +22,7 @@ export function matter(file, options = {}) {
   var strip = options.strip
   var yamlOptions = options.yaml || {}
   var doc = String(file)
-  var match = /^---(?:\r?\n|\r)(?:([\s\S]*)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/.exec(
+  var match = /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/.exec(
     doc
   )
 
