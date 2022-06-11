@@ -5,12 +5,12 @@ import {CORE_SCHEMA} from 'js-yaml'
 import {toVFile as vfile} from 'to-vfile'
 import {matter} from './index.js'
 
-var someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
-var doc = 'Here is a document\nMore of the document\nOther lines\n'
-var both = someYaml + '\n' + doc
+const someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
+const doc = 'Here is a document\nMore of the document\nOther lines\n'
+const both = someYaml + '\n' + doc
 
 test('vfile-matter', function (t) {
-  var file = vfile({value: both})
+  let file = vfile({value: both})
 
   t.equal(matter(file), file, 'should return the given file')
 
@@ -35,7 +35,7 @@ test('vfile-matter', function (t) {
   file = matter(vfile({value: Buffer.from(both)}), {strip: true})
   t.ok(buffer(file.value), 'should supporting buffers')
 
-  var extra = 'Here is a thematic break\n---\nEnd'
+  const extra = 'Here is a thematic break\n---\nEnd'
   file = matter(vfile({value: both + extra}), {strip: true})
   t.deepEqual(String(file), doc + extra, 'should handle thematic breaks')
 

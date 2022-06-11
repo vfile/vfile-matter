@@ -14,15 +14,20 @@ import {load} from 'js-yaml'
  * Parse the YAML front matter in a [`vfile`](https://github.com/vfile/vfile), and add it as `file.data.matter`.
  *
  * If no matter is found in the file, nothing happens, except that `file.data.matter` is set to an empty object (`{}`).
- * @param {VFile} file Virtual file
- * @param {Options} [options] Options
- * @returns The given `file`
+ *
+ * @template {VFile} File
+ * @param {File} file
+ *   Virtual file
+ * @param {Options} [options]
+ *   Options
+ * @returns {File}
+ *   The given `file`
  */
 export function matter(file, options = {}) {
-  var strip = options.strip
-  var yamlOptions = options.yaml || {}
-  var doc = String(file)
-  var match =
+  const strip = options.strip
+  const yamlOptions = options.yaml || {}
+  let doc = String(file)
+  const match =
     /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/.exec(doc)
 
   if (match) {
