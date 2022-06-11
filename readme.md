@@ -47,7 +47,7 @@ stripping frontmatter.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
 
 ```sh
 npm install vfile-matter
@@ -56,14 +56,14 @@ npm install vfile-matter
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {matter} from 'https://esm.sh/vfile-matter@3'
+import {matter} from 'https://esm.sh/vfile-matter@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {matter} from 'https://esm.sh/vfile-matter@3?bundle'
+  import {matter} from 'https://esm.sh/vfile-matter@4?bundle'
 </script>
 ```
 
