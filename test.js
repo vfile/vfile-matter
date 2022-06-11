@@ -1,3 +1,4 @@
+import {Buffer} from 'node:buffer'
 import test from 'tape'
 import buffer from 'is-buffer'
 import {CORE_SCHEMA} from 'js-yaml'

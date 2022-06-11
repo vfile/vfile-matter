@@ -33,6 +33,7 @@ export function matter(file, options = {}) {
 
     if (strip) {
       doc = doc.slice(match[0].length)
+      /* eslint-disable-next-line n/prefer-global/buffer */
       file.value = buffer(file.value) ? Buffer.from(doc) : doc
     }
   } else {
