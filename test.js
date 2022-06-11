@@ -1,7 +1,6 @@
 import {Buffer} from 'node:buffer'
 import test from 'tape'
 import buffer from 'is-buffer'
-import {CORE_SCHEMA} from 'js-yaml'
 import {toVFile as vfile} from 'to-vfile'
 import {matter} from './index.js'
 
@@ -42,13 +41,17 @@ test('vfile-matter', function (t) {
   file = matter(vfile(), {strip: true})
   t.ok(file.value === undefined, 'should supporting empties')
 
-  file = matter(vfile({value: '---\ndate: 2021-01-01\n---\n'}), {
-    yaml: {schema: CORE_SCHEMA}
+  file = matter(vfile({value: '---\nyes: no\n---\n'}), {
+    yaml: {version: '1.2'}
+  })
+  t.deepEqual(file.data, {matter: {yes: 'no'}}, 'should pass yaml options (1)')
+  file = matter(vfile({value: '---\nyes: no\n---\n'}), {
+    yaml: {version: '1.1'}
   })
   t.deepEqual(
     file.data,
-    {matter: {date: '2021-01-01'}},
-    'should pass yaml options'
+    {matter: {true: false}},
+    'should pass yaml options (2)'
   )
 
   t.end()
