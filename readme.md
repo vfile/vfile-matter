@@ -18,6 +18,8 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`matter(file[, options])`](#matterfile-options)
+    *   [`Options`](#options)
+    *   [`YamlOptions`](#yamloptions)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Contribute](#contribute)
@@ -47,7 +49,7 @@ stripping frontmatter.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install vfile-matter
@@ -104,43 +106,63 @@ console.log(String(file))
 
 ## API
 
-This package exports the identifier `matter`.
+This package exports the identifier [`matter`][api-matter].
 There is no default export.
 
 ### `matter(file[, options])`
 
-Parse the YAML front matter in a [`vfile`][vfile], and add it as
-`file.data.matter`.
+Parse the YAML front matter in a file and expose it as `file.data.matter`.
 
 If no matter is found in the file, nothing happens, except that
 `file.data.matter` is set to an empty object (`{}`).
 
-##### `options`
+###### Parameters
 
-Configuration (optional).
+*   `file` ([`VFile`][vfile])
+    — virtual file
+*   `options` ([`Options`][api-options], optional)
+    — configuration
 
-###### `options.strip`
+###### Returns
 
-Remove the YAML front matter from the file (`boolean`, default: `false`).
+The given file ([`VFile`][vfile]).
 
-###### `options.yaml`
+### `Options`
 
-Options for the YAML parser (default: `{}`).
-These are passed to [`yaml`][yaml] as `x` in `yaml.parse('', x)`, which is
-equivalent to the combination of
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `strip` (`boolean`, default: `false`).
+    — remove the YAML front matter from the file
+*   `yaml` ([`YamlOptions`][api-yaml-options], default: {})
+    — configuration for the YAML parser, passed to [`yaml`][yaml] as `x` in
+    `yaml.parse('', x)`
+
+### `YamlOptions`
+
+Options for the YAML parser (TypeScript type).
+
+Equivalent to the combination of
 [`ParseOptions`](https://eemeli.org/yaml/#parse-options),
 [`DocumentOptions`](https://eemeli.org/yaml/#document-options),
 [`SchemaOptions`](https://eemeli.org/yaml/#schema-options), and
 [`ToJsOptions`](https://eemeli.org/yaml/#tojs-options).
 
-###### Returns
+###### Type
 
-The given `file` ([`VFile`][vfile]).
+```ts
+type YamlOptions = ParseOptions &
+  DocumentOptions &
+  SchemaOptions &
+  ToJsOptions
+```
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types `YamlOptions` and `Options`.
+It exports the additional types [`Options`][api-options] and
+[`YamlOptions`][api-yaml-options].
 
 To type `file.data.matter`, you can augment `DataMap` from `vfile` as follows:
 
@@ -148,8 +170,8 @@ To type `file.data.matter`, you can augment `DataMap` from `vfile` as follows:
 declare module 'vfile' {
   interface DataMap {
     matter: {
-      // `file.data.matter.string` is typed as `string?`.
-      title?: string
+      // `file.data.matter.string` is typed as `string | undefined`.
+      title?: string | undefined
     }
   }
 }
@@ -159,7 +181,7 @@ declare module 'vfile' {
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
@@ -231,3 +253,9 @@ abide by its terms.
 [remark-frontmatter]: https://github.com/remarkjs/remark-frontmatter
 
 [yaml]: https://github.com/eemeli/yaml
+
+[api-matter]: #matterfile-options
+
+[api-options]: #options
+
+[api-yaml-options]: #yamloptions
