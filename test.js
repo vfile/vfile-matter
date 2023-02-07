@@ -4,12 +4,19 @@ import test from 'node:test'
 import buffer from 'is-buffer'
 import {VFile} from 'vfile'
 import {matter} from './index.js'
+import * as mod from './index.js'
 
 const someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 const doc = 'Here is a document\nMore of the document\nOther lines\n'
 const both = someYaml + '\n' + doc
 
 test('matter', function () {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['matter'],
+    'should expose the public api'
+  )
+
   let file = new VFile(both)
 
   assert.equal(matter(file), file, 'should return the given file')
