@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {VFile} from 'vfile'
-import {matter} from './index.js'
+import {matter} from 'vfile-matter'
 
 const someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 const doc = 'Here is a document\nMore of the document\nOther lines\n'
@@ -9,7 +9,7 @@ const both = someYaml + '\n' + doc
 
 test('matter', async function () {
   assert.deepEqual(
-    Object.keys(await import('./index.js')).sort(),
+    Object.keys(await import('vfile-matter')).sort(),
     ['matter'],
     'should expose the public api'
   )
