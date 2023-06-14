@@ -116,11 +116,13 @@ Parse the YAML front matter in a file and expose it as `file.data.matter`.
 If no matter is found in the file, nothing happens, except that
 `file.data.matter` is set to an empty object (`{}`).
 
+If the file value is an `Uint8Array`, assumes it is encoded in UTF-8.
+
 ###### Parameters
 
 *   `file` ([`VFile`][vfile])
     — virtual file
-*   `options` ([`Options`][api-options], optional)
+*   `options` ([`Options`][api-options], default: `{}`)
     — configuration
 
 ###### Returns
@@ -135,7 +137,7 @@ Configuration (TypeScript type).
 
 *   `strip` (`boolean`, default: `false`).
     — remove the YAML front matter from the file
-*   `yaml` ([`YamlOptions`][api-yaml-options], default: {})
+*   `yaml` ([`YamlOptions`][api-yaml-options], default: `{}`)
     — configuration for the YAML parser, passed to [`yaml`][yaml] as `x` in
     `yaml.parse('', x)`
 
