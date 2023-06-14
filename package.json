@@ -1,6 +1,6 @@
 {
   "name": "vfile-matter",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "vfile utility to parse the YAML front matter in a file",
   "license": "MIT",
   "keywords": [

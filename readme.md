@@ -58,14 +58,14 @@ npm install vfile-matter
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {matter} from 'https://esm.sh/vfile-matter@4'
+import {matter} from 'https://esm.sh/vfile-matter@5'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {matter} from 'https://esm.sh/vfile-matter@4?bundle'
+  import {matter} from 'https://esm.sh/vfile-matter@5?bundle'
 </script>
 ```
 
