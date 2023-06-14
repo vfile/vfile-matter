@@ -1,7 +1,5 @@
 import assert from 'node:assert/strict'
-import {Buffer} from 'node:buffer'
 import test from 'node:test'
-import buffer from 'is-buffer'
 import {VFile} from 'vfile'
 import {matter} from './index.js'
 
@@ -38,8 +36,19 @@ test('matter', async function () {
   file = matter(new VFile(doc), {strip: true})
   assert.deepEqual(String(file), doc, 'should support no matter w/ strip')
 
-  file = matter(new VFile(Buffer.from(both)), {strip: true})
-  assert.ok(buffer(file.value), 'should supporting buffers')
+  file = matter(
+    new VFile(new TextEncoder().encode('---\na: "hi"\n---\n\n# hi')),
+    {strip: true}
+  )
+  assert.deepEqual(
+    file.data.matter,
+    {a: 'hi'},
+    'should supporting `Uint8Array`s (parse)'
+  )
+  assert.ok(
+    file.value && typeof file.value === 'object',
+    'should supporting `Uint8Array`s (strip)'
+  )
 
   const extra = 'Here is a thematic break\n---\nEnd'
   file = matter(new VFile(both + extra), {strip: true})
