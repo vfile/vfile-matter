@@ -127,7 +127,7 @@ If the file value is an `Uint8Array`, assumes it is encoded in UTF-8.
 
 ###### Returns
 
-The given file ([`VFile`][vfile]).
+Nothing (`undefined`).
 
 ### `Options`
 

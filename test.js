@@ -15,8 +15,7 @@ test('matter', async function () {
   )
 
   let file = new VFile(both)
-
-  assert.equal(matter(file), file, 'should return the given file')
+  matter(file)
 
   assert.deepEqual(
     file.data,
@@ -24,22 +23,24 @@ test('matter', async function () {
     'should add data'
   )
 
-  file = matter(new VFile(doc))
+  file = new VFile(doc)
+  matter(file)
   assert.deepEqual(file.data, {matter: {}}, 'should support no matter')
 
-  file = matter(new VFile(both), {strip: true})
+  file = new VFile(both)
+  matter(file, {strip: true})
   assert.deepEqual(String(file), doc, 'should strip matter')
 
-  file = matter(new VFile(someYaml), {strip: true})
+  file = new VFile(someYaml)
+  matter(file, {strip: true})
   assert.deepEqual(String(file), '', 'should strip matter completely')
 
-  file = matter(new VFile(doc), {strip: true})
+  file = new VFile(doc)
+  matter(file, {strip: true})
   assert.deepEqual(String(file), doc, 'should support no matter w/ strip')
 
-  file = matter(
-    new VFile(new TextEncoder().encode('---\na: "hi"\n---\n\n# hi')),
-    {strip: true}
-  )
+  file = new VFile(new TextEncoder().encode('---\na: "hi"\n---\n\n# hi'))
+  matter(file, {strip: true})
   assert.deepEqual(
     file.data.matter,
     {a: 'hi'},
@@ -51,23 +52,23 @@ test('matter', async function () {
   )
 
   const extra = 'Here is a thematic break\n---\nEnd'
-  file = matter(new VFile(both + extra), {strip: true})
+  file = new VFile(both + extra)
+  matter(file, {strip: true})
   assert.deepEqual(String(file), doc + extra, 'should handle thematic breaks')
 
-  file = matter(new VFile(), {strip: true})
+  file = new VFile()
+  matter(file, {strip: true})
   assert.ok(file.value === undefined, 'should supporting empties')
 
-  file = matter(new VFile('---\nyes: no\n---\n'), {
-    yaml: {version: '1.2'}
-  })
+  file = new VFile('---\nyes: no\n---\n')
+  matter(file, {yaml: {version: '1.2'}})
   assert.deepEqual(
     file.data,
     {matter: {yes: 'no'}},
     'should pass yaml options (1)'
   )
-  file = matter(new VFile('---\nyes: no\n---\n'), {
-    yaml: {version: '1.1'}
-  })
+  file = new VFile('---\nyes: no\n---\n')
+  matter(file, {yaml: {version: '1.1'}})
   assert.deepEqual(
     file.data,
     {matter: {true: false}},
