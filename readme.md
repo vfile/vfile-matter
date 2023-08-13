@@ -169,6 +169,8 @@ It exports the additional types [`Options`][api-options] and
 To type `file.data.matter`, you can augment `DataMap` from `vfile` as follows:
 
 ```ts
+import { DataMap } from "vfile"
+
 declare module 'vfile' {
   interface DataMap {
     matter: {
