@@ -169,8 +169,6 @@ It exports the additional types [`Options`][api-options] and
 To type `file.data.matter`, you can augment `DataMap` from `vfile` as follows:
 
 ```ts
-export {}
-
 declare module 'vfile' {
   interface DataMap {
     matter: {
@@ -179,6 +177,8 @@ declare module 'vfile' {
     }
   }
 }
+
+export {} // You may not need this, but it makes sure the file is a module.
 ```
 
 ## Compatibility
