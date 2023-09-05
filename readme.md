@@ -177,6 +177,8 @@ declare module 'vfile' {
     }
   }
 }
+
+export {} // You may not need this, but it makes sure the file is a module.
 ```
 
 ## Compatibility
