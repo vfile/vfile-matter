@@ -74,11 +74,18 @@ test('matter', async function () {
     {matter: {true: false}},
     'should pass yaml options (2)'
   )
+  file = new VFile('---\n\n---\n')
+  matter(file, {yaml: {version: '1.1'}})
+  assert.deepEqual(
+    file.data,
+    {matter: null},
+    'should not crash on empty frontmatter'
+  )
   file = new VFile('---\n---\n')
   matter(file, {yaml: {version: '1.1'}})
   assert.deepEqual(
     file.data,
-    {matter: {}},
+    {matter: null},
     'should not crash on empty frontmatter'
   )
 })
