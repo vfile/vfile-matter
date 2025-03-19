@@ -4,8 +4,8 @@ import {VFile} from 'vfile'
 import {matter} from 'vfile-matter'
 
 const someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
-const doc = 'Here is a document\nMore of the document\nOther lines\n'
-const both = someYaml + '\n' + doc
+const document = 'Here is a document\nMore of the document\nOther lines\n'
+const both = someYaml + '\n' + document
 
 test('matter', async function () {
   assert.deepEqual(
@@ -23,21 +23,21 @@ test('matter', async function () {
     'should add data'
   )
 
-  file = new VFile(doc)
+  file = new VFile(document)
   matter(file)
   assert.deepEqual(file.data, {matter: {}}, 'should support no matter')
 
   file = new VFile(both)
   matter(file, {strip: true})
-  assert.deepEqual(String(file), doc, 'should strip matter')
+  assert.deepEqual(String(file), document, 'should strip matter')
 
   file = new VFile(someYaml)
   matter(file, {strip: true})
   assert.deepEqual(String(file), '', 'should strip matter completely')
 
-  file = new VFile(doc)
+  file = new VFile(document)
   matter(file, {strip: true})
-  assert.deepEqual(String(file), doc, 'should support no matter w/ strip')
+  assert.deepEqual(String(file), document, 'should support no matter w/ strip')
 
   file = new VFile(new TextEncoder().encode('---\na: "hi"\n---\n\n# hi'))
   matter(file, {strip: true})
@@ -54,7 +54,11 @@ test('matter', async function () {
   const extra = 'Here is a thematic break\n---\nEnd'
   file = new VFile(both + extra)
   matter(file, {strip: true})
-  assert.deepEqual(String(file), doc + extra, 'should handle thematic breaks')
+  assert.deepEqual(
+    String(file),
+    document + extra,
+    'should handle thematic breaks'
+  )
 
   file = new VFile()
   matter(file, {strip: true})
