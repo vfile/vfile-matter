@@ -78,9 +78,9 @@ Say our document `example.html` contains:
 
 ```html
 ---
-title: Hello, world!
+layout: solar-system
 ---
-<p>Some more text</p>
+<h1>Jupiter</h1>
 ```
 
 …and our module `example.js` looks as follows:
@@ -100,11 +100,11 @@ console.log(String(file))
 …now running `node example.js` yields:
 
 ```js
-{matter: {title: 'Hello, world!'}}
+{ matter: { layout: 'solar-system' } }
 ```
 
 ```html
-<p>Some more text</p>
+<h1>Jupiter</h1>
 ```
 
 ## API
