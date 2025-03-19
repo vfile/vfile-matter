@@ -82,13 +82,13 @@ test('matter', async function (t) {
   await t.test('should support empty frontmatter', async function () {
     const file = new VFile('---\n---\n')
     matter(file)
-    assert.deepEqual(file.data, {matter: null})
+    assert.deepEqual(file.data, {matter: {}})
   })
 
   await t.test('should support blank line in frontmatter', async function () {
     const file = new VFile('---\n\n---\n')
     matter(file)
-    assert.deepEqual(file.data, {matter: null})
+    assert.deepEqual(file.data, {matter: {}})
   })
 
   await t.test(
@@ -96,7 +96,7 @@ test('matter', async function (t) {
     async function () {
       const file = new VFile('---\n \t\n---\n')
       matter(file)
-      assert.deepEqual(file.data, {matter: null})
+      assert.deepEqual(file.data, {matter: {}})
     }
   )
 
