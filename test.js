@@ -7,89 +7,108 @@ const someYaml = '---\nkey: value\nlist:\n  - 1\n  - 2\n---'
 const document = 'Here is a document\nMore of the document\nOther lines\n'
 const both = someYaml + '\n' + document
 
-test('matter', async function () {
-  assert.deepEqual(
-    Object.keys(await import('vfile-matter')).sort(),
-    ['matter'],
-    'should expose the public api'
+test('matter', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('vfile-matter')).sort(), [
+      'matter'
+    ])
+  })
+
+  await t.test('should add data', async function () {
+    const file = new VFile(both)
+    matter(file)
+
+    assert.deepEqual(file.data, {matter: {key: 'value', list: [1, 2]}})
+  })
+
+  await t.test('should support no matter', async function () {
+    const file = new VFile(document)
+    matter(file)
+    assert.deepEqual(file.data, {matter: {}})
+  })
+
+  await t.test('should strip matter', async function () {
+    const file = new VFile(both)
+    matter(file, {strip: true})
+    assert.deepEqual(String(file), document)
+  })
+
+  await t.test('should strip matter completely', async function () {
+    const file = new VFile(someYaml)
+    matter(file, {strip: true})
+    assert.deepEqual(String(file), '')
+  })
+
+  await t.test('should support no matter w/ strip', async function () {
+    const file = new VFile(document)
+    matter(file, {strip: true})
+    assert.deepEqual(String(file), document)
+  })
+
+  await t.test('should supporting `Uint8Array`s (parse)', async function () {
+    const file = new VFile(
+      new TextEncoder().encode('---\na: "hi"\n---\n\n# hi')
+    )
+    matter(file)
+    assert.deepEqual(file.data.matter, {a: 'hi'})
+    assert.ok(
+      file.value && typeof file.value === 'object',
+      'should supporting `Uint8Array`s'
+    )
+  })
+
+  await t.test('should supporting `Uint8Array`s (strip)', async function () {
+    const file = new VFile(
+      new TextEncoder().encode('---\na: "hi"\n---\n\n# hi')
+    )
+    matter(file, {strip: true})
+    assert.deepEqual(file.data.matter, {a: 'hi'})
+    assert.ok(file.value && typeof file.value === 'object')
+  })
+
+  await t.test('should handle thematic breaks', async function () {
+    const extra = 'Here is a thematic break\n---\nEnd'
+    const file = new VFile(both + extra)
+    matter(file, {strip: true})
+    assert.deepEqual(String(file), document + extra)
+  })
+
+  await t.test('should support files w/o value', async function () {
+    const file = new VFile()
+    matter(file, {strip: true})
+    assert.ok(file.value === undefined)
+  })
+
+  await t.test('should support empty frontmatter', async function () {
+    const file = new VFile('---\n---\n')
+    matter(file)
+    assert.deepEqual(file.data, {matter: null})
+  })
+
+  await t.test('should support blank line in frontmatter', async function () {
+    const file = new VFile('---\n\n---\n')
+    matter(file)
+    assert.deepEqual(file.data, {matter: null})
+  })
+
+  await t.test(
+    'should support whitespace-only blank line in frontmatter',
+    async function () {
+      const file = new VFile('---\n \t\n---\n')
+      matter(file)
+      assert.deepEqual(file.data, {matter: null})
+    }
   )
 
-  let file = new VFile(both)
-  matter(file)
+  await t.test('should pass yaml options (1)', async function () {
+    const file = new VFile('---\nyes: no\n---\n')
+    matter(file, {yaml: {version: '1.2'}})
+    assert.deepEqual(file.data, {matter: {yes: 'no'}})
+  })
 
-  assert.deepEqual(
-    file.data,
-    {matter: {key: 'value', list: [1, 2]}},
-    'should add data'
-  )
-
-  file = new VFile(document)
-  matter(file)
-  assert.deepEqual(file.data, {matter: {}}, 'should support no matter')
-
-  file = new VFile(both)
-  matter(file, {strip: true})
-  assert.deepEqual(String(file), document, 'should strip matter')
-
-  file = new VFile(someYaml)
-  matter(file, {strip: true})
-  assert.deepEqual(String(file), '', 'should strip matter completely')
-
-  file = new VFile(document)
-  matter(file, {strip: true})
-  assert.deepEqual(String(file), document, 'should support no matter w/ strip')
-
-  file = new VFile(new TextEncoder().encode('---\na: "hi"\n---\n\n# hi'))
-  matter(file, {strip: true})
-  assert.deepEqual(
-    file.data.matter,
-    {a: 'hi'},
-    'should supporting `Uint8Array`s (parse)'
-  )
-  assert.ok(
-    file.value && typeof file.value === 'object',
-    'should supporting `Uint8Array`s (strip)'
-  )
-
-  const extra = 'Here is a thematic break\n---\nEnd'
-  file = new VFile(both + extra)
-  matter(file, {strip: true})
-  assert.deepEqual(
-    String(file),
-    document + extra,
-    'should handle thematic breaks'
-  )
-
-  file = new VFile()
-  matter(file, {strip: true})
-  assert.ok(file.value === undefined, 'should supporting empties')
-
-  file = new VFile('---\nyes: no\n---\n')
-  matter(file, {yaml: {version: '1.2'}})
-  assert.deepEqual(
-    file.data,
-    {matter: {yes: 'no'}},
-    'should pass yaml options (1)'
-  )
-  file = new VFile('---\nyes: no\n---\n')
-  matter(file, {yaml: {version: '1.1'}})
-  assert.deepEqual(
-    file.data,
-    {matter: {true: false}},
-    'should pass yaml options (2)'
-  )
-  file = new VFile('---\n\n---\n')
-  matter(file, {yaml: {version: '1.1'}})
-  assert.deepEqual(
-    file.data,
-    {matter: null},
-    'should not crash on empty frontmatter'
-  )
-  file = new VFile('---\n---\n')
-  matter(file, {yaml: {version: '1.1'}})
-  assert.deepEqual(
-    file.data,
-    {matter: null},
-    'should not crash on empty frontmatter'
-  )
+  await t.test('should pass yaml options (2)', async function () {
+    const file = new VFile('---\nyes: no\n---\n')
+    matter(file, {yaml: {version: '1.1'}})
+    assert.deepEqual(file.data, {matter: {true: false}})
+  })
 })
