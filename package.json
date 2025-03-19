@@ -1,41 +1,14 @@
 {
-  "name": "vfile-matter",
-  "version": "5.0.0",
-  "description": "vfile utility to parse the YAML front matter in a file",
-  "license": "MIT",
-  "keywords": [
-    "vfile",
-    "vfile-util",
-    "util",
-    "utility",
-    "virtual",
-    "file",
-    "frontmatter",
-    "matter",
-    "yaml"
-  ],
-  "repository": "vfile/vfile-matter",
-  "bugs": "https://github.com/vfile/vfile-matter/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/vfile/vfile-matter/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "lib/",
-    "index.d.ts",
-    "index.js"
   ],
   "dependencies": {
     "vfile": "^6.0.0",
     "yaml": "^2.0.0"
   },
+  "description": "vfile utility to parse the YAML front matter in a file",
   "devDependencies": {
     "@types/node": "^22.0.0",
     "c8": "^10.0.0",
@@ -46,14 +19,29 @@
     "typescript": "^5.0.0",
     "xo": "^0.60.0"
   },
-  "scripts": {
-    "prepack": "npm run build && npm run format",
-    "build": "tsc --build --clean && tsc --build && type-coverage",
-    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
-    "test-api": "node --conditions development test.js",
-    "test-coverage": "c8 --100 --reporter lcov npm run test-api",
-    "test": "npm run build && npm run format && npm run test-coverage"
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "lib/"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
   },
+  "keywords": [
+    "file",
+    "frontmatter",
+    "matter",
+    "utility",
+    "util",
+    "vfile-util",
+    "vfile",
+    "virtual",
+    "yaml"
+  ],
+  "license": "MIT",
+  "name": "vfile-matter",
   "prettier": {
     "bracketSpacing": false,
     "semi": false,
@@ -67,12 +55,21 @@
       "remark-preset-wooorm"
     ]
   },
+  "repository": "vfile/vfile-matter",
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark --frail --output --quiet -- . && prettier --log-level warn --write -- . && xo --fix",
+    "test-api": "node --conditions development test.js",
+    "test-coverage": "c8 --100 --reporter lcov -- npm run test-api",
+    "test": "npm run build && npm run format && npm run test-coverage"
+  },
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
-    "detail": true,
-    "ignoreCatch": true,
     "strict": true
   },
+  "type": "module",
+  "version": "5.0.0",
   "xo": {
     "prettier": true
   }
