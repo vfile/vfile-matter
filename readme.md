@@ -24,23 +24,26 @@
 
 ## What is this?
 
-This package parses YAML frontmatter, when found in a file, and exposes it as
-`file.data.matter`.
-It can optionally strip the frontmatter, which is useful for languages that do
-not understand frontmatter, but stripping can make it harder to deal with
-languages that *do* understand it, such as markdown, because it messes up
-positional info of warnings and errors.
+This package parses YAML frontmatter,
+when found in a file,
+and exposes it as `file.data.matter`.
+It can optionally strip the frontmatter,
+which is useful for languages that do not understand frontmatter,
+but stripping can make it harder to deal with languages that *do* understand it,
+such as markdown,
+because it messes up positional info of warnings and errors.
 
 ## When should I use this?
 
 Frontmatter is a metadata format in front of content.
 It’s typically written in YAML and is often used with markdown.
-This mechanism works well when you want authors, that have some markup
-experience, to configure where or how the content is displayed or supply
-metadata about content.
+This mechanism works well when you want authors,
+that have some markup experience,
+to configure where or how the content is displayed or supply metadata about
+content.
 
-When using vfiles with markdown, you are likely also using
-[remark][github-remark],
+When using vfiles with markdown,
+you are likely also using [remark][github-remark],
 in which case you should use [`remark-frontmatter`][github-remark-frontmatter],
 instead of
 stripping frontmatter.
@@ -48,7 +51,8 @@ stripping frontmatter.
 ## Install
 
 This package is [ESM only][github-gist-esm].
-In Node.js (version 16+), install with [npm][npmjs-install]:
+In Node.js (version 16+),
+install with [npm][npmjs-install]:
 
 ```sh
 npm install vfile-matter
@@ -106,22 +110,29 @@ console.log(String(file))
 ## API
 
 This package exports the identifier [`matter`][api-matter].
+It exports the [TypeScript][] types
+[`Options`][api-options] and
+[`YamlOptions`][api-yaml-options].
 There is no default export.
 
 ### `matter(file[, options])`
 
 Parse the YAML front matter in a file and expose it as `file.data.matter`.
 
-If no matter is found in the file, nothing happens, except that
-`file.data.matter` is set to an empty object (`{}`).
+If no matter is found in the file,
+nothing happens,
+except that `file.data.matter` is set to an empty object (`{}`).
 
-If the file value is an `Uint8Array`, assumes it is encoded in UTF-8.
+If the file value is an `Uint8Array`,
+assumes it is encoded in UTF-8.
 
 ###### Parameters
 
-* `file` ([`VFile`][github-vfile])
+* `file`
+  ([`VFile`][github-vfile])
   — virtual file
-* `options` ([`Options`][api-options], default: `{}`)
+* `options`
+  ([`Options`][api-options], default: `{}`)
   — configuration
 
 ###### Returns
@@ -134,38 +145,38 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-* `strip` (`boolean`, default: `false`).
+* `strip`
+  (`boolean`, default: `false`)
   — remove the YAML front matter from the file
-* `yaml` ([`YamlOptions`][api-yaml-options], default: `{}`)
-  — configuration for the YAML parser, passed to [`yaml`][github-yaml] as `x` in
-  `yaml.parse('', x)`
+* `yaml`
+  ([`YamlOptions`][api-yaml-options], default: `{}`)
+  — configuration for the YAML parser,
+  passed to [`yaml`][github-yaml] as `x` in `yaml.parse('', x)`
 
 ### `YamlOptions`
 
 Options for the YAML parser (TypeScript type).
 
 Equivalent to the combination of
-[`ParseOptions`](https://eemeli.org/yaml/#parse-options),
 [`DocumentOptions`](https://eemeli.org/yaml/#document-options),
-[`SchemaOptions`](https://eemeli.org/yaml/#schema-options), and
+[`ParseOptions`](https://eemeli.org/yaml/#parse-options),
+[`SchemaOptions`](https://eemeli.org/yaml/#schema-options),
+and
 [`ToJsOptions`](https://eemeli.org/yaml/#tojs-options).
 
 ###### Type
 
 ```ts
-type YamlOptions = ParseOptions &
-  DocumentOptions &
+type YamlOptions = DocumentOptions &
+  ParseOptions &
   SchemaOptions &
   ToJsOptions
 ```
 
 ## Types
 
-This package is fully typed with [TypeScript][].
-It exports the additional types [`Options`][api-options] and
-[`YamlOptions`][api-yaml-options].
-
-To type `file.data.matter`, you can augment `DataMap` from `vfile` as follows:
+To type `file.data.matter` with [TypeScript][],
+you can augment `DataMap` from `vfile` as follows:
 
 ```ts
 declare module 'vfile' {
@@ -177,7 +188,9 @@ declare module 'vfile' {
   }
 }
 
-export {} // You may not need this, but it makes sure the file is a module.
+// You may not need this,
+// but it makes sure the file is a module.
+export {}
 ```
 
 ## Compatibility
@@ -185,9 +198,10 @@ export {} // You may not need this, but it makes sure the file is a module.
 Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
 
-When we cut a new major release, we drop support for unmaintained versions of
-Node.
-This means we try to keep the current release line, `vfile-matter@^5`,
+When we cut a new major release,
+we drop support for unmaintained versions of Node.
+This means we try to keep the current release line,
+`vfile-matter@5`,
 compatible with Node.js 16.
 
 ## Contribute
@@ -197,8 +211,9 @@ for ways to get started.
 See [`support.md`][health-support] for ways to get help.
 
 This project has a [code of conduct][health-coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+By interacting with this repository,
+organization,
+or community you agree to abide by its terms.
 
 ## License
 
