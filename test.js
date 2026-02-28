@@ -24,7 +24,7 @@ test('matter', async function (t) {
   await t.test('should support no matter', async function () {
     const file = new VFile(document)
     matter(file)
-    assert.deepEqual(file.data, {matter: {}})
+    assert.deepEqual(file.data, {matter: undefined})
   })
 
   await t.test('should strip matter', async function () {
@@ -82,13 +82,13 @@ test('matter', async function (t) {
   await t.test('should support empty frontmatter', async function () {
     const file = new VFile('---\n---\n')
     matter(file)
-    assert.deepEqual(file.data, {matter: {}})
+    assert.deepEqual(file.data, {matter: null})
   })
 
   await t.test('should support blank line in frontmatter', async function () {
     const file = new VFile('---\n\n---\n')
     matter(file)
-    assert.deepEqual(file.data, {matter: {}})
+    assert.deepEqual(file.data, {matter: null})
   })
 
   await t.test(
@@ -96,19 +96,19 @@ test('matter', async function (t) {
     async function () {
       const file = new VFile('---\n \t\n---\n')
       matter(file)
-      assert.deepEqual(file.data, {matter: {}})
+      assert.deepEqual(file.data, {matter: null})
     }
   )
 
-  await t.test('should pass yaml options (1)', async function () {
-    const file = new VFile('---\nyes: no\n---\n')
-    matter(file, {yaml: {version: '1.2'}})
+  await t.test('should support toml', async function () {
+    const file = new VFile('+++\nyes = "no"\n+++\n')
+    matter(file)
     assert.deepEqual(file.data, {matter: {yes: 'no'}})
   })
 
-  await t.test('should pass yaml options (2)', async function () {
+  await t.test('should pass custom parsers', async function () {
     const file = new VFile('---\nyes: no\n---\n')
-    matter(file, {yaml: {version: '1.1'}})
-    assert.deepEqual(file.data, {matter: {true: false}})
+    matter(file, {yaml: String})
+    assert.deepEqual(file.data, {matter: 'yes: no\n'})
   })
 })

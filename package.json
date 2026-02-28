@@ -5,8 +5,8 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "dependencies": {
-    "vfile": "^6.0.0",
-    "yaml": "^2.0.0"
+    "simplematter": "^1.0.0",
+    "vfile": "^6.0.0"
   },
   "description": "vfile utility to parse the YAML front matter in a file",
   "devDependencies": {
